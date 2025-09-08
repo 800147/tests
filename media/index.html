@@ -16,38 +16,38 @@
     <!--prettier-ignore-->
     <style>
       .Queries.Queries { padding-left: 0; }
-      .Queries.Queries li { font-size: calc(var(--multiplier-s) * 1rem) }
+      /*.Queries.Queries li { font-size: calc(var(--multiplier-s) * 1rem) }*/
       .Queries.Queries li:before { display: none; }
       :where(.Queries li) { display: none; }
 
-      @media (width < 100px) { .m-w100 { display: block; } }
-      @media (100px <= width < 200px) { .m-100w200 { display: block; } }
-      @media (200px <= width < 300px) { .m-200w300 { display: block; } }
-      @media (300px <= width < 400px) { .m-300w400 { display: block; } }
-      @media (400px <= width) { .m-400w { display: block; } }
+      @media (width < 400px) { .m-w400 { display: block; } }
+      @media (400px <= width < 500px) { .m-400w500 { display: block; } }
+      @media (500px <= width < 600px) { .m-500w600 { display: block; } }
+      @media (600px <= width < 700px) { .m-600w700 { display: block; } }
+      @media (700px <= width) { .m-700w { display: block; } }
 
-      @media (min-width: 100px) { .min100 { display: block; } }
-      @media (min-width: 200px) { .min200 { display: block; } }
-      @media (min-width: 300px) { .min300 { display: block; } }
       @media (min-width: 400px) { .min400 { display: block; } }
+      @media (min-width: 500px) { .min500 { display: block; } }
+      @media (min-width: 600px) { .min600 { display: block; } }
+      @media (min-width: 700px) { .min700 { display: block; } }
 
-      @media (max-width: 99px) { .max99 { display: block; } }
-      @media (max-width: 199px) { .max199 { display: block; } }
-      @media (max-width: 299px) { .max299 { display: block; } }
       @media (max-width: 399px) { .max399 { display: block; } }
+      @media (max-width: 499px) { .max499 { display: block; } }
+      @media (max-width: 599px) { .max599 { display: block; } }
+      @media (max-width: 699px) { .max699 { display: block; } }
 
-      @media not (min-width: 100px) { .not-min100 { display: block; } }
-      @media not (min-width: 200px) { .not-min200 { display: block; } }
-      @media not (min-width: 300px) { .not-min300 { display: block; } }
       @media not (min-width: 400px) { .not-min400 { display: block; } }
+      @media not (min-width: 500px) { .not-min500 { display: block; } }
+      @media not (min-width: 600px) { .not-min600 { display: block; } }
+      @media not (min-width: 700px) { .not-min700 { display: block; } }
 
-      @media (min-width: 100px) and (max-width: 199px) { .min100-max199 { display: block; } }
-      @media (min-width: 200px) and (max-width: 299px) { .min200-max299 { display: block; } }
-      @media (min-width: 300px) and (max-width: 399px) { .min300-max399 { display: block; } }
+      @media (min-width: 400px) and (max-width: 499px) { .min400-max499 { display: block; } }
+      @media (min-width: 500px) and (max-width: 599px) { .min500-max599 { display: block; } }
+      @media (min-width: 600px) and (max-width: 699px) { .min600-max699 { display: block; } }
 
-      @media (min-width: 100px) and (not (min-width: 200px)) { .min100-not-min200 { display: block; } }
-      @media (min-width: 200px) and (not (min-width: 300px)) { .min200-not-min300 { display: block; } }
-      @media (min-width: 300px) and (not (min-width: 400px)) { .min300-not-min400 { display: block; } }
+      @media (min-width: 400px) and (not (min-width: 500px)) { .min400-not-min500 { display: block; } }
+      @media (min-width: 500px) and (not (min-width: 600px)) { .min500-not-min600 { display: block; } }
+      @media (min-width: 600px) and (not (min-width: 700px)) { .min600-not-min700 { display: block; } }
     </style>
   </head>
   <body class="Document">
@@ -62,39 +62,41 @@
       <p>Matched queries:</p>
       <!--prettier-ignore-->
       <ul class="Queries">
-        <li class="m-w100">(width < 100px)</li>
-        <li class="m-100w200">(100px <= width < 200px)</li>
-        <li class="m-200w300">(200px <= width < 300px)</li>
-        <li class="m-300w400">(300px <= width < 400px)</li>
-        <li class="m-400w">(400px <= width)</li>
+        <li class="m-w400">(width < 400px)</li>
+        <li class="m-400w500">(400px <= width < 500px)</li>
+        <li class="m-500w600">(500px <= width < 600px)</li>
+        <li class="m-600w700">(600px <= width < 700px)</li>
+        <li class="m-700w">(700px <= width)</li>
 
-        <li class="not-min100">not (min-width: 100px)</li>
-        <li class="min100-not-min200">(min-width: 100px) and (not (min-width: 200px))</li>
-        <li class="min200-not-min300">(min-width: 200px) and (not (min-width: 300px))</li>
-        <li class="min300-not-min400">(min-width: 300px) and (not (min-width: 400px))</li>
-        <li class="min400">(min-width: 400px)</li>
+        <li class="not-min400">not (min-width: 400px)</li>
+        <li class="min400-not-min500">(min-width: 400px) and (not (min-width: 500px))</li>
+        <li class="min500-not-min600">(min-width: 500px) and (not (min-width: 600px))</li>
+        <li class="min600-not-min700">(min-width: 600px) and (not (min-width: 700px))</li>
+        <li class="min700">(min-width: 700px)</li>
 
-        <li class="max99">not (min-width: 100px)</li>
-        <li class="min100-max199">(min-width: 100px) and (max-width: 199px)</li>
-        <li class="min200-max299">(min-width: 200px) and (max-width: 299px)</li>
-        <li class="min300-max399">(min-width: 300px) and (max-width: 399px)</li>
-        <li class="min400">(min-width: 400px)</li>
+        <li class="max399">(max-width: 399px)</li>
+        <li class="min400-max499">(min-width: 400px) and (max-width: 499px)</li>
+        <li class="min500-max599">(min-width: 500px) and (max-width: 599px)</li>
+        <li class="min600-max699">(min-width: 600px) and (max-width: 699px)</li>
+        <li class="min700">(min-width: 700px)</li>
 
         <li style="display: block;">------</li>
 
-        <li class="min100">(min-width: 100px)</li>
-        <li class="min200">(min-width: 200px)</li>
-        <li class="min300">(min-width: 300px)</li>
         <li class="min400">(min-width: 400px)</li>
-        <li class="max99">(max-width: 99px)</li>
-        <li class="max199">(max-width: 199px)</li>
-        <li class="max299">(max-width: 299px)</li>
+        <li class="min500">(min-width: 500px)</li>
+        <li class="min600">(min-width: 600px)</li>
+        <li class="min700">(min-width: 700px)</li>
         <li class="max399">(max-width: 399px)</li>
+        <li class="max499">(max-width: 499px)</li>
+        <li class="max599">(max-width: 599px)</li>
+        <li class="max699">(max-width: 699px)</li>
 
-        <li class="not-min100">not (min-width: 100px)</li>
-        <li class="not-min200">not (min-width: 200px)</li>
-        <li class="not-min300">not (min-width: 300px)</li>
+        <li style="display: block;">------</li>
+
         <li class="not-min400">not (min-width: 400px)</li>
+        <li class="not-min500">not (min-width: 500px)</li>
+        <li class="not-min600">not (min-width: 600px)</li>
+        <li class="not-min700">not (min-width: 700px)</li>
       </ul>
       <p>Change the window width to see the difference</p>
     </main>
