@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,38 +16,37 @@
     <!--prettier-ignore-->
     <style>
       .Queries.Queries { padding-left: 0; }
-      /*.Queries.Queries li { font-size: calc(var(--multiplier-s) * 1rem) }*/
       .Queries.Queries li:before { display: none; }
-      :where(.Queries li) { display: none; }
+      .Queries li { display: none; }
 
-      @media (width < 400px) { .m-w400 { display: block; } }
-      @media (400px <= width < 500px) { .m-400w500 { display: block; } }
-      @media (500px <= width < 600px) { .m-500w600 { display: block; } }
-      @media (600px <= width < 700px) { .m-600w700 { display: block; } }
-      @media (700px <= width) { .m-700w { display: block; } }
+      @media (width < 400px) { .Queries .m-w400 { display: block; } }
+      @media (400px <= width < 500px) { .Queries .m-400w500 { display: block; } }
+      @media (500px <= width < 600px) { .Queries .m-500w600 { display: block; } }
+      @media (600px <= width < 700px) { .Queries .m-600w700 { display: block; } }
+      @media (700px <= width) { .Queries .m-700w { display: block; } }
 
-      @media (min-width: 400px) { .min400 { display: block; } }
-      @media (min-width: 500px) { .min500 { display: block; } }
-      @media (min-width: 600px) { .min600 { display: block; } }
-      @media (min-width: 700px) { .min700 { display: block; } }
+      @media (min-width: 400px) { .Queries .min400 { display: block; } }
+      @media (min-width: 500px) { .Queries .min500 { display: block; } }
+      @media (min-width: 600px) { .Queries .min600 { display: block; } }
+      @media (min-width: 700px) { .Queries .min700 { display: block; } }
 
-      @media (max-width: 399px) { .max399 { display: block; } }
-      @media (max-width: 499px) { .max499 { display: block; } }
-      @media (max-width: 599px) { .max599 { display: block; } }
-      @media (max-width: 699px) { .max699 { display: block; } }
+      @media (max-width: 399px) { .Queries .max399 { display: block; } }
+      @media (max-width: 499px) { .Queries .max499 { display: block; } }
+      @media (max-width: 599px) { .Queries .max599 { display: block; } }
+      @media (max-width: 699px) { .Queries .max699 { display: block; } }
 
-      @media not (min-width: 400px) { .not-min400 { display: block; } }
-      @media not (min-width: 500px) { .not-min500 { display: block; } }
-      @media not (min-width: 600px) { .not-min600 { display: block; } }
-      @media not (min-width: 700px) { .not-min700 { display: block; } }
+      @media not (min-width: 400px) { .Queries .not-min400 { display: block; } }
+      @media not (min-width: 500px) { .Queries .not-min500 { display: block; } }
+      @media not (min-width: 600px) { .Queries .not-min600 { display: block; } }
+      @media not (min-width: 700px) { .Queries .not-min700 { display: block; } }
 
-      @media (min-width: 400px) and (max-width: 499px) { .min400-max499 { display: block; } }
-      @media (min-width: 500px) and (max-width: 599px) { .min500-max599 { display: block; } }
-      @media (min-width: 600px) and (max-width: 699px) { .min600-max699 { display: block; } }
+      @media (min-width: 400px) and (max-width: 499px) { .Queries .min400-max499 { display: block; } }
+      @media (min-width: 500px) and (max-width: 599px) { .Queries .min500-max599 { display: block; } }
+      @media (min-width: 600px) and (max-width: 699px) { .Queries .min600-max699 { display: block; } }
 
-      @media (min-width: 400px) and (not (min-width: 500px)) { .min400-not-min500 { display: block; } }
-      @media (min-width: 500px) and (not (min-width: 600px)) { .min500-not-min600 { display: block; } }
-      @media (min-width: 600px) and (not (min-width: 700px)) { .min600-not-min700 { display: block; } }
+      @media (min-width: 400px) and (not (min-width: 500px)) { .Queries .min400-not-min500 { display: block; } }
+      @media (min-width: 500px) and (not (min-width: 600px)) { .Queries .min500-not-min600 { display: block; } }
+      @media (min-width: 600px) and (not (min-width: 700px)) { .Queries .min600-not-min700 { display: block; } }
     </style>
   </head>
   <body class="Document">
