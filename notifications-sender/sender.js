@@ -12,6 +12,18 @@ const getUrlParams = (parsers) =>
 
 const subscriptionInfo = JSON.parse(getUrlParams().si);
 
+if (
+  subscriptionInfo.endpoint.startsWith(
+    "https://updates.push.services.mozilla.com",
+  )
+) {
+  // Firefox разрешает обращаться к push-серверу из браузера,
+  // поэтому отправлять запрос с бэка не надо
+  sendFromBackCheckbox.checked = false;
+} else {
+  sendFromBackCheckbox.checked = true;
+}
+
 sendButton.addEventListener("click", async () => {
   const keyPair = await deserializeVapidKeys({
     publicKey: subscriptionInfo.keys.publicKey,

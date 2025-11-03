@@ -27,20 +27,23 @@
       <h1>Notifications sender</h1>
       <p>
         <label>
-          <input type="checkbox" id="sendFromBackCheckbox" />send from back
+          <input type="checkbox" id="sendFromBackCheckbox" />отправить с бэка
         </label>
       </p>
       <p>
-        to send the message from back (for Chrome and Safari) you need to run
-        notifications-sender-back on localhost:3000
+        Чтобы отправить сообщение через бэк (для Хрома и Сафари), надо запустить
+        <a
+          href="https://github.com/800147/tests/tree/main/notifications-sender-back"
+        >
+          notifications-sender-back
+        </a>
+        на localhost:3000. Для Firefox это делать не обязательно и можно
+        отправлять запросы без бэка
       </p>
       <p>
-        <input type="text" id="input" value="hello" /><button
-          type="button"
-          id="sendButton"
-        >
-          send
-        </button>
+        <input type="text" id="input" value="hello" />
+        <br />
+        <button type="button" id="sendButton">отправить</button>
       </p>
     </main>
     <!-- Cloudflare Web Analytics -->

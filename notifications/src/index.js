@@ -1,6 +1,5 @@
 import { fromBase64Url } from "../node_modules/web-push-browser/build/index.js";
 import { generateVAPIDKeys } from "./helpers/vapid.js";
-import { showInPageNotification } from "./Notification/Notification.js";
 
 let vapidKeys;
 
@@ -26,17 +25,50 @@ const notificationsPermissionCheck = async () => {
   );
 };
 
-const showNotification = (payload) => {
-  const { text, url, notificationId } = payload;
-  showInPageNotification(text, url);
+const updateSubscribtionState = async () => {
+  const { pushManager } = (await navigator.serviceWorker?.ready) ?? {};
 
-  if (document.visibilityState === "visible" && document.hasFocus()) {
-    navigator.serviceWorker.controller?.postMessage({
-      action: "NOTIFIED",
-      payload: { notificationId },
-    });
+  if (await pushManager.getSubscription()) {
+    document.body.classList.add("Push_subscribed");
+    document.body.classList.remove("Push_unsubscribed");
+  } else {
+    document.body.classList.remove("Push_subscribed");
+    document.body.classList.add("Push_unsubscribed");
   }
 };
+
+subscribePushButton.addEventListener("click", async () => {
+  if (!("PushManager" in window)) {
+    console.error("No PushManager support");
+
+    return;
+  }
+
+  // В настоящем приложении vapid ключи должны генерироваться
+  // на сервере и на фронт должна приходить только публичная часть.
+  // В этой демке это допущение делается для простоты реализации
+  vapidKeys = await generateVAPIDKeys();
+
+  const { pushManager } = (await navigator.serviceWorker?.ready) ?? {};
+
+  const state = await checkPushManagerState(pushManager);
+
+  if (state !== "prompt" && state !== "granted") {
+    return;
+  }
+
+  await subscribeToPush();
+
+  updateSubscribtionState();
+});
+
+unsubscribePushButton.addEventListener("click", async () => {
+  const { pushManager } = (await navigator.serviceWorker?.ready) ?? {};
+
+  await (await pushManager.getSubscription()).unsubscribe();
+
+  updateSubscribtionState();
+});
 
 const swInit = async () => {
   if (!("serviceWorker" in navigator)) {
@@ -47,50 +79,8 @@ const swInit = async () => {
 
   try {
     const scope = location.pathname.replace(/\/[^/]*$/, "/");
-    const { active, pushManager } = await navigator.serviceWorker.register(
-      `${scope}sw.js`,
-      {
-        scope,
-      },
-    );
-
-    const updateSubscribtionState = async () => {
-      if (await pushManager.getSubscription()) {
-        document.body.classList.add("Push_subscribed");
-        document.body.classList.remove("Push_unsubscribed");
-      } else {
-        document.body.classList.remove("Push_subscribed");
-        document.body.classList.add("Push_unsubscribed");
-      }
-    };
-
-    subscribePushButton.addEventListener("click", async () => {
-      // В настоящем приложении vapid ключи должны генерироваться
-      // на сервере и на фронт должна приходить только публичная часть.
-      // В этой демке это допущение делается для простоты реализации
-      vapidKeys = await generateVAPIDKeys();
-
-      if (!("PushManager" in window)) {
-        console.error("No PushManager support");
-
-        return;
-      }
-
-      const state = await checkPushManagerState(pushManager);
-
-      if (state !== "prompt" && state !== "granted") {
-        return;
-      }
-
-      await subscribeToPush(pushManager);
-
-      updateSubscribtionState();
-    });
-
-    unsubscribePushButton.addEventListener("click", async () => {
-      await (await pushManager.getSubscription()).unsubscribe();
-
-      updateSubscribtionState();
+    const { active } = await navigator.serviceWorker.register(`${scope}sw.js`, {
+      scope,
     });
 
     updateSubscribtionState();
@@ -107,16 +97,6 @@ const swInit = async () => {
         });
       }),
     );
-
-    navigator.serviceWorker.addEventListener("message", (event) => {
-      const { action, payload } = event.data;
-
-      switch (action) {
-        case "SHOW_NOTIFICATION":
-          showNotification(payload);
-          break;
-      }
-    });
   } catch (error) {
     console.error("Registration failed with error:\n" + error);
   }
@@ -155,14 +135,14 @@ const checkPushManagerState = async (pushManager) => {
   }
 };
 
-async function subscribeToPush(pushManager) {
+async function subscribeToPush() {
   if (!vapidKeys.publicKey) {
     console.error("VAPID key is not configured");
     return;
   }
 
   try {
-    // const swRegistration = await navigator.serviceWorker.ready;
+    const { pushManager } = (await navigator.serviceWorker?.ready) ?? {};
 
     if (!pushManager) {
       return;

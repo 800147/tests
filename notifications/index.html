@@ -12,7 +12,6 @@
       rel="stylesheet"
       href="https://800147.github.io/document/src/document.css"
     />
-    <link rel="stylesheet" href="./src/Notification/Notification.css" />
     <link rel="icon" type="image/svg+xml" href="../img/favicon.svg" />
     <link rel="icon" type="image/png" href="../img/favicon.png" />
     <link
@@ -51,6 +50,22 @@
     </nav>
     <main>
       <h1>Notifications</h1>
+
+      <h2>Подписка на оповещения</h2>
+
+      <p>Особенности, которые надо учитывать:</p>
+      <ul>
+        <li>В некоторых браузерах оповещения запрещены в приватном режиме</li>
+        <li>
+          В iOS и iPadOS оповещения доступны только если добавить сайт на
+          домашний экран
+        </li>
+        <li>
+          Подписка на Push уже включает в себя запрос на разрешение уведомлений.
+          Отдельно их можно не запрашивать.
+        </li>
+      </ul>
+
       <figure class="AllowNotificationsButtonFigure">
         <button id="allowNotificationsButton">allow notifications</button>
       </figure>
@@ -60,6 +75,16 @@
       <figure class="UnsubscribePushButtonFigure">
         <button id="unsubscribePushButton">unsubscribe push</button>
       </figure>
+
+      <h2>Отправка оповещений из сервис-воркера</h2>
+
+      <p>
+        Кнопки ниже нужны для проверки работы Notification API и Service Worker.
+        Оповещения, которые будут отображаться после нажатия на эти кнопки
+        отправляются без участия Push API. Для проверки Push используйте
+        Controller (ссылка на него появляется в момент подписки на оповещения)
+      </p>
+
       <figure class="NotifyButtonFigure">
         <button style="--color: var(--blue-color)" data-delay="0">
           notify now
