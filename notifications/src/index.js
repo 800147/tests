@@ -7,9 +7,15 @@ const notificationsPermissionCheck = async () => {
   const update = () => {
     if (Notification.permission === "granted") {
       document.body.classList.add("Notifications_granted");
-    } else {
-      document.body.classList.remove("Notifications_granted");
+
+      return;
     }
+
+    if (Notification.permission === "denied") {
+      console.error("Notifications permission", Notification.permission);
+    }
+
+    document.body.classList.remove("Notifications_granted");
   };
 
   const notificationsPermissionQuery = await navigator.permissions.query({
@@ -54,6 +60,8 @@ subscribePushButton.addEventListener("click", async () => {
   const state = await checkPushManagerState(pushManager);
 
   if (state !== "prompt" && state !== "granted") {
+    console.error(`Bad pushManager state: ${state}`);
+
     return;
   }
 

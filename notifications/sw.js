@@ -35,6 +35,7 @@ const notify = async (payload) => {
       icon: "https://800147.github.io/tests/img/favicon_72.png",
       silent: false,
       data: { url },
+      body: text,
     });
   } catch (e) {
     console.error("can't notify");
