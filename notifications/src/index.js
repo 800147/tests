@@ -17,9 +17,10 @@ const notificationsPermissionCheck = async () => {
     document.body.classList.remove("Notifications_granted");
   };
 
-  allowNotificationsButton.addEventListener("click", () =>
-    Notification.requestPermission().then(update).catch(console.error),
-  );
+  allowNotificationsButton.addEventListener("click", () => {
+    console.log("requesting permissions...");
+    Notification.requestPermission().then(update).catch(console.error);
+  });
 
   const notificationsPermissionQuery = await navigator.permissions.query({
     name: "notifications",
@@ -79,7 +80,7 @@ unsubscribePushButton.addEventListener("click", async () => {
 
 const swInit = async () => {
   if (!("serviceWorker" in navigator)) {
-    console.error("serviceWorker not awailable");
+    console.error("serviceWorker not available");
 
     return;
   }
@@ -121,7 +122,27 @@ const swInit = async () => {
     console.error("Registration failed with error:\n" + error);
   }
 };
+const print = (v) => {
+  switch (typeof v) {
+    case "function":
+      return "[function]";
+    case "string":
+      return `"${v}"`;
+    default:
+      return String(v);
+  }
+};
 
+const writeStatus = () => {
+  statusSection.innerText = `Notification: ${print(Notification)}
+Notification?.permission: ${print(Notification?.permission)}
+Notification?.requestPermission: ${print(Notification?.requestPermission)}
+"PushManager" in window: ${print("PushManager" in window)}
+navigator.serviceWorker: ${print(navigator.serviceWorker)}
+`;
+};
+
+writeStatus();
 notificationsPermissionCheck();
 swInit();
 
