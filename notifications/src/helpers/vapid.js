@@ -1,3 +1,21 @@
+// From web-push-browser package
+
+/**
+ * Convert a base64url encoded string to an ArrayBuffer
+ * @param base64 - The base64url encoded string.
+ * @returns The ArrayBuffer.
+ */
+export function fromBase64Url(base64) {
+  const padding = "=".repeat((4 - (base64.length % 4)) % 4);
+  const base64Padded = (base64 + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const binary = atob(base64Padded);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
+
 // https://steveseguin.github.io/vapid/
 
 // Generate VAPID keys using Web Crypto API

@@ -1,5 +1,4 @@
-import { fromBase64Url } from "../node_modules/web-push-browser/build/index.js";
-import { generateVAPIDKeys } from "./helpers/vapid.js";
+import { generateVAPIDKeys, fromBase64Url } from "./helpers/vapid.js";
 
 let vapidKeys;
 
@@ -18,6 +17,10 @@ const notificationsPermissionCheck = async () => {
     document.body.classList.remove("Notifications_granted");
   };
 
+  allowNotificationsButton.addEventListener("click", () =>
+    Notification.requestPermission().then(update).catch(console.error),
+  );
+
   const notificationsPermissionQuery = await navigator.permissions.query({
     name: "notifications",
   });
@@ -25,10 +28,6 @@ const notificationsPermissionCheck = async () => {
   update();
 
   notificationsPermissionQuery.addEventListener("change", update);
-
-  allowNotificationsButton.addEventListener("click", () =>
-    Notification.requestPermission().then(() => update()),
-  );
 };
 
 const updateSubscribtionState = async () => {
@@ -95,11 +94,24 @@ const swInit = async () => {
 
     [...document.querySelectorAll(".NotifyButtonFigure button")].map((button) =>
       button.addEventListener("click", (event) => {
+        const buttonDataset = event.target.dataset ?? {};
+
+        if (buttonDataset.inTab) {
+          const date = new Date();
+          new Notification("Notification", {
+            body: `Notification from tab ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+            data: { url: "./message.html?t=It's time!" },
+            tag: buttonDataset.tag,
+          });
+
+          return;
+        }
+
         active.postMessage({
           action: "NOTIFY",
           payload: {
-            delay: Number(event.target.dataset.delay) * 1000,
-            text: `${event.target.dataset.delay} seconds have passed`,
+            delay: Number(buttonDataset.delay) * 1000,
+            text: `${buttonDataset.delay} seconds have passed`,
             url: "./message.html?t=It's time!",
           },
         });
@@ -150,7 +162,8 @@ async function subscribeToPush() {
   }
 
   try {
-    const { pushManager } = (await navigator.serviceWorker?.ready) ?? {};
+    const ready = (await navigator.serviceWorker?.ready) ?? {};
+    const { pushManager } = ready;
 
     if (!pushManager) {
       return;

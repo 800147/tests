@@ -1,13 +1,5 @@
 const pause = (delay) => new Promise((res) => setTimeout(res, delay));
 
-self.addEventListener("install", (event) => {
-  // self.skipWaiting();
-});
-
-self.addEventListener("activate", (event) => {
-  event.waitUntil(self.clients.claim());
-});
-
 const notify = async (payload) => {
   const { delay = 0, text, url } = payload;
 
@@ -41,6 +33,14 @@ const notify = async (payload) => {
     console.error("can't notify");
   }
 };
+
+self.addEventListener("install", (event) => {
+  // self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
+});
 
 self.addEventListener("message", async (event) => {
   const { action, payload } = event.data;
