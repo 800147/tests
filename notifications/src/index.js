@@ -2,6 +2,26 @@ import { generateVAPIDKeys, fromBase64Url } from "./helpers/vapid.js";
 
 let vapidKeys;
 
+const print = (v) => {
+  switch (typeof v) {
+    case "function":
+      return "[function]";
+    case "string":
+      return `"${v}"`;
+    default:
+      return String(v);
+  }
+};
+
+const writeStatus = () => {
+  statusSection.innerText = `Notification: ${print(Notification)}
+Notification?.permission: ${print(Notification?.permission)}
+Notification?.requestPermission: ${print(Notification?.requestPermission)}
+"PushManager" in window: ${print("PushManager" in window)}
+navigator.serviceWorker: ${print(navigator.serviceWorker)}
+`;
+};
+
 const notificationsPermissionCheck = async () => {
   const update = () => {
     if (Notification.permission === "granted") {
@@ -19,12 +39,13 @@ const notificationsPermissionCheck = async () => {
 
   allowNotificationsButton.addEventListener("click", () => {
     console.log("requesting permissions...");
-    Notification.requestPermission().then(
-      (res) => {
+    Notification.requestPermission()
+      .then((res) => {
         console.log("requestPermission success", res);
         update();
-      }
-    ).catch(console.error);
+      })
+      .catch(console.error)
+      .finally(writeStatus);
   });
 
   const notificationsPermissionQuery = await navigator.permissions.query({
@@ -126,25 +147,6 @@ const swInit = async () => {
   } catch (error) {
     console.error("Registration failed with error:\n" + error);
   }
-};
-const print = (v) => {
-  switch (typeof v) {
-    case "function":
-      return "[function]";
-    case "string":
-      return `"${v}"`;
-    default:
-      return String(v);
-  }
-};
-
-const writeStatus = () => {
-  statusSection.innerText = `Notification: ${print(Notification)}
-Notification?.permission: ${print(Notification?.permission)}
-Notification?.requestPermission: ${print(Notification?.requestPermission)}
-"PushManager" in window: ${print("PushManager" in window)}
-navigator.serviceWorker: ${print(navigator.serviceWorker)}
-`;
 };
 
 writeStatus();
