@@ -14,12 +14,15 @@ const print = (v) => {
 };
 
 const writeStatus = () => {
-  statusSection.innerText = `Notification: ${print(Notification)}
-Notification?.permission: ${print(Notification?.permission)}
-Notification?.requestPermission: ${print(Notification?.requestPermission)}
-"PushManager" in window: ${print("PushManager" in window)}
-navigator.serviceWorker: ${print(navigator.serviceWorker)}
-`;
+  statusSection.innerText = [
+    "Notification",
+    "Notification?.permission",
+    "Notification?.requestPermission",
+    "navigator.serviceWorker",
+    '"PushManager" in window',
+  ]
+    .map((command) => `${command}: ${print(eval(command))}`)
+    .join("\n");
 };
 
 const notificationsPermissionCheck = async () => {
@@ -113,9 +116,12 @@ const swInit = async () => {
 
   try {
     const scope = location.pathname.replace(/\/[^/]*$/, "/");
-    const { active } = await navigator.serviceWorker.register(`${scope}sw.js`, {
-      scope,
-    });
+    const registration = await navigator.serviceWorker.register(
+      `${scope}sw.js`,
+      {
+        scope,
+      },
+    );
 
     updateSubscribtionState();
 
@@ -125,16 +131,32 @@ const swInit = async () => {
 
         if (buttonDataset.inTab) {
           const date = new Date();
-          new Notification("Notification", {
+          const notification = new Notification("Notification", {
             body: `Notification from tab ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
             data: { url: "./message.html?t=It's time!" },
             tag: buttonDataset.tag,
           });
 
+          notification.addEventListener("click", (event) => {
+            console.log("event.target", event.target);
+            console.log("event.action", event.action);
+
+            if (!event.target.data?.url) {
+              return;
+            }
+
+            event.preventDefault();
+            event.target.close();
+
+            window
+              .open(event.action ?? event.target.data.url, "_blank")
+              .focus();
+          });
+
           return;
         }
 
-        active.postMessage({
+        registration.active.postMessage({
           action: "NOTIFY",
           payload: {
             delay: Number(buttonDataset.delay) * 1000,
