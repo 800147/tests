@@ -19,7 +19,12 @@ const notificationsPermissionCheck = async () => {
 
   allowNotificationsButton.addEventListener("click", () => {
     console.log("requesting permissions...");
-    Notification.requestPermission().then(update).catch(console.error);
+    Notification.requestPermission().then(
+      (res) => {
+        console.log("requestPermission success", res);
+        update();
+      }
+    ).catch(console.error);
   });
 
   const notificationsPermissionQuery = await navigator.permissions.query({
