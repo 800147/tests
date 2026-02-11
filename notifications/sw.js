@@ -14,7 +14,7 @@ const notify = async (payload) => {
       data: { url },
       actions: [
         {
-          action: url,
+          action: url + "&fromAction=1",
           title: "action",
           icon: "https://800147.github.io/tests/img/favicon_72.png",
         },
@@ -50,14 +50,15 @@ self.addEventListener("message", async (event) => {
 });
 
 self.addEventListener("notificationclick", (event) => {
+  event.preventDefault();
+
   if (!event.notification.data?.url) {
     return;
   }
 
-  event.preventDefault();
   event.notification.close();
   event.waitUntil(
-    clients.openWindow(event.action ?? event.notification.data.url),
+    self.clients.openWindow(event.action || event.notification.data.url),
   );
 });
 

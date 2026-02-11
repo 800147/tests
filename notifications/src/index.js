@@ -42,22 +42,33 @@ const notificationsPermissionCheck = async () => {
 
   allowNotificationsButton.addEventListener("click", () => {
     console.log("requesting permissions...");
-    Notification.requestPermission()
-      .then((res) => {
+
+    Notification.requestPermission((res) => {
+      console.log("requestPermission success", res);
+      update();
+      writeStatus();
+    })
+      ?.then?.((res) => {
         console.log("requestPermission success", res);
-        update();
       })
       .catch(console.error)
-      .finally(writeStatus);
+      .finally(() => {
+        update();
+        writeStatus();
+      });
   });
+
+  update();
 
   const notificationsPermissionQuery = await navigator.permissions.query({
     name: "notifications",
   });
 
-  update();
-
-  notificationsPermissionQuery.addEventListener("change", update);
+  notificationsPermissionQuery.addEventListener("change", () => {
+    console.log("notifications permission changed", Notification.permission);
+    update();
+    writeStatus();
+  });
 };
 
 const updateSubscribtionState = async () => {
@@ -135,9 +146,11 @@ const swInit = async () => {
             body: `Notification from tab ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
             data: { url: "./message.html?t=It's time!" },
             tag: buttonDataset.tag,
+            renotify: false,
           });
 
           notification.addEventListener("click", (event) => {
+            event.preventDefault();
             console.log("event.target", event.target);
             console.log("event.action", event.action);
 
@@ -145,7 +158,6 @@ const swInit = async () => {
               return;
             }
 
-            event.preventDefault();
             event.target.close();
 
             window
