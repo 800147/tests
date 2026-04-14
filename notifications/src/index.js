@@ -74,7 +74,7 @@ const notificationsPermissionCheck = async () => {
 const updateSubscribtionState = async () => {
   const { pushManager } = (await navigator.serviceWorker?.ready) ?? {};
 
-  if (await pushManager.getSubscription()) {
+  if (await pushManager?.getSubscription()) {
     document.body.classList.add("Push_subscribed");
     document.body.classList.remove("Push_unsubscribed");
   } else {
