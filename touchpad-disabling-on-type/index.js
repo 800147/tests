@@ -49,6 +49,8 @@ const fillMin = () => {
 };
 
 const onKeydown = (e) => {
+  console.log("keydown");
+
   keydownTime = e.timeStamp;
 
   keyupTime = undefined;
@@ -61,10 +63,14 @@ const onKeydown = (e) => {
 };
 
 const onKeyup = (e) => {
+  console.log("keyup");
+
   keyupTime = e.timeStamp;
 };
 
 const onMousedown = (e) => {
+  console.log("mousedown");
+
   let changed = false;
 
   if (
@@ -100,6 +106,8 @@ const onMousedown = (e) => {
 };
 
 const onMousemove = (e) => {
+  console.log("mousemove");
+
   let changed = false;
 
   if (

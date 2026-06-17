@@ -18,7 +18,7 @@
     <link rel="icon" type="image/png" href="../img/favicon.png" />
     <script type="module" src="./index.js" defer></script>
     <style>
-      td {
+      td[id] {
         min-width: 100px;
         text-align: right;
       }
@@ -43,28 +43,11 @@
         панель при вводе текста».
       </p>
 
-      <h2>Минимальные значения</h2>
-
-      <table>
-        <tbody>
-          <tr>
-            <th>от keydown до mousemove</th>
-            <td id="minKeydownMousemoveEl"></td>
-          </tr>
-          <tr>
-            <th>от keyup до mousemove</th>
-            <td id="minKeyupMousemoveEl"></td>
-          </tr>
-          <tr>
-            <th>от keydown до mousedown</th>
-            <td id="minKeydownMousedownEl"></td>
-          </tr>
-          <tr>
-            <th>от keyup до mousedown</th>
-            <td id="minKeyupMousedownEl"></td>
-          </tr>
-        </tbody>
-      </table>
+      <p>
+        Важно понимать, что при удержании кнопки, событие keydown начинает
+        срабатывать само в цикле с маленьким интервалом. Это влияет на замеры.
+        За срабатыванием событий можно следить в консоли браузера.
+      </p>
 
       <h2>Последний замер</h2>
 
@@ -85,6 +68,29 @@
           <tr>
             <th>от keyup до mousedown</th>
             <td id="lastKeyupMousedownEl"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Минимальные значения</h2>
+
+      <table>
+        <tbody>
+          <tr>
+            <th>от keydown до mousemove</th>
+            <td id="minKeydownMousemoveEl"></td>
+          </tr>
+          <tr>
+            <th>от keyup до mousemove</th>
+            <td id="minKeyupMousemoveEl"></td>
+          </tr>
+          <tr>
+            <th>от keydown до mousedown</th>
+            <td id="minKeydownMousedownEl"></td>
+          </tr>
+          <tr>
+            <th>от keyup до mousedown</th>
+            <td id="minKeyupMousedownEl"></td>
           </tr>
         </tbody>
       </table>
