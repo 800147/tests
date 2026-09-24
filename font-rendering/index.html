@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шрифты</title>
+    <meta name="color-scheme" content="light dark">
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,&lt;svg viewBox='0 0 18 18' xmlns='http://www.w3.org/2000/svg'>&lt;text x='9' y='14.5' text-anchor='middle'>🔠&lt;/text>&lt;/svg>"
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      .tr_os { text-rendering: optimizeSpeed; }
+      .tr_ol { text-rendering: optimizeLegibility; }
+      .tr_gp { text-rendering: geometricPrecision; }
+      .fs_n { font-smooth: never; }
+      .fs_a { font-smooth: always; }
+      .wfs_n { -webkit-font-smoothing: none; }
+      .wfs_a { -webkit-font-smoothing: antialiased; }
+      .wfs_sa { -webkit-font-smoothing: subpixel-antialiased; }
+
+      dt { opacity: 0.5; font-family: monospace; }
+      [data-text] { font-family: sans-serif; }
+      .pt [data-text] { font-family: "PT Sans"; }
+    </style>
+  </head>
+  <body>
+    <p>
+      <input type="text" value="Проверочный текст" id="input">
+    </p>
+    <h2>font-family: sans-serif;</h2>
+    <dl>
+      <dt class="tr_os">text-rendering: optimizeSpeed;</dt>
+      <dd data-text class="tr_os"></dd>
+      <dt class="tr_ol">text-rendering: optimizeLegibility;</dt>
+      <dd data-text class="tr_ol"></dd>
+      <dt class="tr_gp">text-rendering: geometricPrecision;</dt>
+      <dd data-text class="tr_gp"></dd>
+      <dt class="fs_n">font-smooth: never;</dt>
+      <dd data-text class="fs_n"></dd>
+      <dt class="fs_a">font-smooth: always;</dt>
+      <dd data-text class="fs_a"></dd>
+      <dt class="wfs_n">-webkit-font-smoothing: none;</dt>
+      <dd data-text class="wfs_n"></dd>
+      <dt class="wfs_a">-webkit-font-smoothing: antialiased;</dt>
+      <dd data-text class="wfs_a"></dd>
+      <dt class="wfs_sa">-webkit-font-smoothing: subpixel-antialiased;</dt>
+      <dd data-text class="wfs_sa"></dd>
+      <dt class="wfs_a tr_ol">-webkit-font-smoothing: antialiased;<br>text-rendering: optimizeLegibility;</dt>
+      <dd data-text class="wfs_a tr_ol"></dd>
+      <dt class="wfs_a tr_ol">-webkit-font-smoothing: subpixel-antialiased;<br>text-rendering: optimizeLegibility;</dt>
+      <dd data-text class="wfs_sa tr_ol"></dd>
+    </dl>
+    <h2>font-family: "PT Sans";</h2>
+    <dl class="pt">
+      <dt class="tr_os">text-rendering: optimizeSpeed;</dt>
+      <dd data-text class="tr_os"></dd>
+      <dt class="tr_ol">text-rendering: optimizeLegibility;</dt>
+      <dd data-text class="tr_ol"></dd>
+      <dt class="tr_gp">text-rendering: geometricPrecision;</dt>
+      <dd data-text class="tr_gp"></dd>
+      <dt class="fs_n">font-smooth: never;</dt>
+      <dd data-text class="fs_n"></dd>
+      <dt class="fs_a">font-smooth: always;</dt>
+      <dd data-text class="fs_a"></dd>
+      <dt class="wfs_n">-webkit-font-smoothing: none;</dt>
+      <dd data-text class="wfs_n"></dd>
+      <dt class="wfs_a">-webkit-font-smoothing: antialiased;</dt>
+      <dd data-text class="wfs_a"></dd>
+      <dt class="wfs_sa">-webkit-font-smoothing: subpixel-antialiased;</dt>
+      <dd data-text class="wfs_sa"></dd>
+      <dt class="wfs_a tr_ol">-webkit-font-smoothing: antialiased;<br>text-rendering: optimizeLegibility;</dt>
+      <dd data-text class="wfs_a tr_ol"></dd>
+      <dt class="wfs_a tr_ol">-webkit-font-smoothing: subpixel-antialiased;<br>text-rendering: optimizeLegibility;</dt>
+      <dd data-text class="wfs_sa tr_ol"></dd>
+    </dl>
+    <script>
+      const texts = Array.from(document.querySelectorAll('[data-text]'));
+      const updateText = () => texts.forEach(t => {
+        t.innerText = input.value;
+      });
+      input.addEventListener('input', updateText);
+      updateText();
+    </script>
+  </body>
+</html>
